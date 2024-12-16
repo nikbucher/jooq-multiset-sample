@@ -1,0 +1,19 @@
+.*
+!.editorconfig
+!.gitattributes
+!.gitignore
+!.mvn/
+
+/config/
+build/
+generated/
+target/
+
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# IntelliJ
+*.iws
+*.iml
+*.ipr
