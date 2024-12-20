@@ -12,6 +12,7 @@ import static org.jooq.impl.DSL.sum;
 import io.bucher.sample.domain.Day;
 import io.bucher.sample.domain.DaySummary;
 import io.bucher.sample.domain.Entry;
+import io.bucher.sample.tables.records.SomeEntryRecord;
 import java.time.LocalDate;
 import java.util.List;
 import org.jooq.DSLContext;
@@ -29,20 +30,38 @@ class JooqMultisetaggSampleApplicationTests {
 
 	@Test
 	void should_fetch_days() {
+		assertThat(ctx.fetchCount(SOME_ENTRY)).isEqualTo(12);
+		ctx.transaction(txc -> {
+			var txCtx = txc.dsl();
+			try {
+				var result = txCtx.select(SOME_ENTRY.DATE)
+						.from(SOME_ENTRY)
+						.groupBy(SOME_ENTRY.DATE)
+						.orderBy(SOME_ENTRY.DATE)
+						.fetch(mapping(Day::new));
 
-		var result = ctx.select(SOME_ENTRY.DATE)
-				.from(SOME_ENTRY)
-				.groupBy(SOME_ENTRY.DATE)
-				.orderBy(SOME_ENTRY.DATE)
-				.fetch(mapping(Day::new));
+				assertThat(result).containsExactly(
+						Day.from("2024-01-01"),
+						Day.from("2024-01-02"),
+						Day.from("2024-01-03"),
+						Day.from("2024-01-04"),
+						Day.from("2024-01-05")
+				);
 
-		assertThat(result).containsExactly(
-				Day.from("2024-01-01"),
-				Day.from("2024-01-02"),
-				Day.from("2024-01-03"),
-				Day.from("2024-01-04"),
-				Day.from("2024-01-05")
-		);
+				assertThat(txCtx.fetchCount(SOME_ENTRY)).isEqualTo(12);
+
+				SomeEntryRecord record = txCtx.newRecord(SOME_ENTRY);
+				record.setDate(LocalDate.parse("2024-01-11"));
+				record.setDescription("foo");
+				record.setDuration(123L);
+				record.store();
+
+				assertThat(txCtx.fetchCount(SOME_ENTRY)).isEqualTo(13);
+			} finally {
+				txCtx.rollback().execute();
+			}
+		});
+		assertThat(ctx.fetchCount(SOME_ENTRY)).isEqualTo(12);
 	}
 
 	@Test
