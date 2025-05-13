@@ -14,9 +14,8 @@ class TxTest extends JooqIntegTest {
 	@Test
 	void create_changes_to_test_rollback() {
 		assertThat(ctx().fetchCount(SOME_ENTRY)).isEqualTo(12);
-		var result = ctx().select(SOME_ENTRY.DATE)
+		var result = ctx().selectDistinct(SOME_ENTRY.DATE)
 				.from(SOME_ENTRY)
-				.groupBy(SOME_ENTRY.DATE)
 				.orderBy(SOME_ENTRY.DATE)
 				.fetch(mapping(Day::new));
 
@@ -41,6 +40,12 @@ class TxTest extends JooqIntegTest {
 
 	@Test
 	void other_test() {
+//		var someEntryRecord = new SomeEntryDao(ctx().configuration()).fetchOneById(1L);
+		var someEntryRecord = ctx().selectFrom(SOME_ENTRY)
+				.where(SOME_ENTRY.getIdentity().getField().eq(1000L))
+				.fetchOne();
+		someEntryRecord.setDescription("foo");
+		someEntryRecord.store();
 		assertThat(ctx().fetchCount(SOME_ENTRY)).isEqualTo(12);
 	}
 
