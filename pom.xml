@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -17,6 +15,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<jooq.version>3.19.13</jooq.version>
+		<spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
 		<testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
 	</properties>
 
@@ -75,6 +74,40 @@
 		<defaultGoal>spring-boot:run</defaultGoal>
 		<plugins>
 			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless-maven-plugin.version}</version>
+				<configuration>
+					<pom>
+						<sortPom>
+							<!-- The encoding of the pom files -->
+							<encoding>UTF-8</encoding>
+							<!-- Should empty elements be expanded -->
+							<expandEmptyElements>false</expandEmptyElements>
+							<!-- Indentation with tabs -->
+							<nrOfIndentSpace>-1</nrOfIndentSpace>
+							<!--
+							Sort order of elements: https://github.com/Ekryd/sortpom/wiki/PredefinedSortOrderProfiles
+							recommended_2008_06 - The POM Code Convention that was chosen by Maven developers in 2008 (default for 3.0.0+)
+							-->
+							<predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+							<!-- Sort modules -->
+							<sortModules>true</sortModules>
+							<!-- Sort properties -->
+							<sortProperties>true</sortProperties>
+						</sortPom>
+					</pom>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.testcontainers</groupId>
 				<artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
 				<version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
@@ -125,6 +158,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<trimStackTrace>false</trimStackTrace>
+					<enableAssertions>true</enableAssertions>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -133,13 +170,8 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<trimStackTrace>false</trimStackTrace>
-					<enableAssertions>true</enableAssertions>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
