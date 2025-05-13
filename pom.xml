@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>21</java.version>
+		<jooq-utilities.version>1.1.2</jooq-utilities.version>
 		<jooq.version>3.20.4</jooq.version>
 		<spotless-maven-plugin.version>2.44.4</spotless-maven-plugin.version>
 		<testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
@@ -129,6 +130,11 @@
 						<artifactId>postgresql</artifactId>
 						<version>${postgresql.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>ch.martinelli.oss</groupId>
+						<artifactId>jooq-utilities</artifactId>
+						<version>${jooq-utilities.version}</version>
+					</dependency>
 				</dependencies>
 				<executions>
 					<execution>
@@ -153,6 +159,7 @@
 										<embeddableDomains>.*</embeddableDomains>
 										<recordVersionFields>version</recordVersionFields>
 									</database>
+									<name>ch.martinelli.oss.jooq.EqualsAndHashCodeJavaGenerator</name>
 									<target>
 										<packageName>io.bucher.sample</packageName>
 									</target>
