@@ -20,7 +20,7 @@
 		<jooq.version>3.20.9</jooq.version>
 		<spotless-maven-plugin.version>3.1.0</spotless-maven-plugin.version>
 		<testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
-		<testcontainers.version>2.0.2</testcontainers.version>
+		<testcontainers.version>2.0.3</testcontainers.version>
 	</properties>
 
 	<dependencies>
