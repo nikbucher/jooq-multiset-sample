@@ -72,7 +72,7 @@ class JooqIntegTest {
 		try {
 			if (closeable != null)
 				closeable.close();
-		} catch (Exception ignored) {
+		} catch (Exception _) {
 		}
 	}
 
