@@ -8,11 +8,11 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 class JooqIntegTest {
 
-	private static final ThreadLocal<PostgreSQLContainer<?>> TL_POSTGRES = new ThreadLocal<>();
+	private static final ThreadLocal<PostgreSQLContainer> TL_POSTGRES = new ThreadLocal<>();
 	private static final ThreadLocal<Connection> TL_DB_CONNECTION = new ThreadLocal<>();
 	private static final ThreadLocal<DSLContext> TL_CTX = new ThreadLocal<>();
 
@@ -25,7 +25,7 @@ class JooqIntegTest {
 	}
 
 	private DSLContext initializeDslCtx() {
-		var pg = new PostgreSQLContainer<>("postgres:latest");
+		var pg = new PostgreSQLContainer("postgres:latest");
 		TL_POSTGRES.set(pg);
 		pg.start();
 
