@@ -70,7 +70,8 @@ class JooqIntegTest {
 
 	private void closeSilently(AutoCloseable closeable) {
 		try {
-			if (closeable != null) closeable.close();
+			if (closeable != null)
+				closeable.close();
 		} catch (Exception ignored) {
 		}
 	}

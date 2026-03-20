@@ -5,6 +5,5 @@ import java.util.List;
 
 public record DaySummary(
 		LocalDate date,
-		List<Entry> entries
-) {
+		List<Entry> entries) {
 }

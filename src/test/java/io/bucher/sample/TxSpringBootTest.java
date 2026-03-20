@@ -46,8 +46,7 @@ class TxSpringBootTest {
 				Day.from("2024-01-02"),
 				Day.from("2024-01-03"),
 				Day.from("2024-01-04"),
-				Day.from("2024-01-05")
-		);
+				Day.from("2024-01-05"));
 
 		assertThat(ctx.fetchCount(SOME_ENTRY)).isEqualTo(12);
 

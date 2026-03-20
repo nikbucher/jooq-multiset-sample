@@ -45,8 +45,7 @@ class JooqMultisetaggSampleApplicationTests {
 						Day.from("2024-01-02"),
 						Day.from("2024-01-03"),
 						Day.from("2024-01-04"),
-						Day.from("2024-01-05")
-				);
+						Day.from("2024-01-05"));
 
 				assertThat(txCtx.fetchCount(SOME_ENTRY)).isEqualTo(12);
 
@@ -73,21 +72,17 @@ class JooqMultisetaggSampleApplicationTests {
 				select(
 						e.DATE.as("date"),
 						e.DESCRIPTION.as("description"),
-						sum(e.DURATION).as("duration")
-				).from(e)
-						.groupBy(e.DATE, e.DESCRIPTION)
-		);
+						sum(e.DURATION).as("duration")).from(e)
+						.groupBy(e.DATE, e.DESCRIPTION));
 
 		List<DaySummary> result = ctx.select(
-						e.DATE,
-						multiset(
-								daySummaryCte.select(
-												field("description", String.class),
-												field("duration", Long.class)
-										).from(daySummary)
-										.where(field("day_summary.date", LocalDate.class).eq(e.DATE))
-						).convertFrom(r -> r.map(mapping(Entry::new)))
-				)
+				e.DATE,
+				multiset(
+						daySummaryCte.select(
+								field("description", String.class),
+								field("duration", Long.class)).from(daySummary)
+								.where(field("day_summary.date", LocalDate.class).eq(e.DATE)))
+						.convertFrom(r -> r.map(mapping(Entry::new))))
 				.from(e)
 				.groupBy(e.DATE)
 				.orderBy(e.DATE)
@@ -98,32 +93,21 @@ class JooqMultisetaggSampleApplicationTests {
 						List.of(
 								new Entry("Task A description", 90),
 								new Entry("Task B description", 120),
-								new Entry("Task C description", 180)
-						)
-				),
+								new Entry("Task C description", 180))),
 				new DaySummary(LocalDate.parse("2024-01-02"),
 						List.of(
 								new Entry("Task B description", 120),
-								new Entry("Task C description", 150)
-						)
-				),
+								new Entry("Task C description", 150))),
 				new DaySummary(LocalDate.parse("2024-01-03"),
 						List.of(
 								new Entry("Task A description", 310),
-								new Entry("Task C description", 90)
-						)
-				),
+								new Entry("Task C description", 90))),
 				new DaySummary(LocalDate.parse("2024-01-04"),
 						List.of(
-								new Entry("Task C description", 100)
-						)
-				),
+								new Entry("Task C description", 100))),
 				new DaySummary(LocalDate.parse("2024-01-05"),
 						List.of(
-								new Entry("Task B description", 390)
-						)
-				)
-		);
+								new Entry("Task B description", 390))));
 
 	}
 

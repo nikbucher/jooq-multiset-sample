@@ -87,6 +87,11 @@
 				<artifactId>spotless-maven-plugin</artifactId>
 				<version>${spotless-maven-plugin.version}</version>
 				<configuration>
+					<java>
+						<eclipse>
+							<file>${project.basedir}/eclipse-formatter.xml</file>
+						</eclipse>
+					</java>
 					<pom>
 						<sortPom>
 							<!-- The encoding of the pom files -->

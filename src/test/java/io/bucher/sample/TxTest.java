@@ -24,8 +24,7 @@ class TxTest extends JooqIntegTest {
 				Day.from("2024-01-02"),
 				Day.from("2024-01-03"),
 				Day.from("2024-01-04"),
-				Day.from("2024-01-05")
-		);
+				Day.from("2024-01-05"));
 
 		assertThat(ctx().fetchCount(SOME_ENTRY)).isEqualTo(12);
 
@@ -40,7 +39,7 @@ class TxTest extends JooqIntegTest {
 
 	@Test
 	void other_test() {
-//		var someEntryRecord = new SomeEntryDao(ctx().configuration()).fetchOneById(1L);
+		// var someEntryRecord = new SomeEntryDao(ctx().configuration()).fetchOneById(1L);
 		var someEntryRecord = ctx().selectFrom(SOME_ENTRY)
 				.where(SOME_ENTRY.getIdentity().getField().eq(1000L))
 				.fetchOne();
