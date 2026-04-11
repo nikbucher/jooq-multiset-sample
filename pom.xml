@@ -5,6 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
+		<!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-parent/maven-metadata.xml -->
 		<version>4.0.5</version>
 		<relativePath/>
 		<!-- lookup parent from repository -->
@@ -17,7 +18,6 @@
 	<properties>
 		<java.version>25</java.version>
 		<jooq-utilities.version>1.1.4</jooq-utilities.version>
-		<jooq.version>3.21.1</jooq.version>
 		<spotless-maven-plugin.version>3.4.0</spotless-maven-plugin.version>
 		<testcontainers-jooq-codegen-maven-plugin.version>0.0.4</testcontainers-jooq-codegen-maven-plugin.version>
 		<testcontainers.version>2.0.4</testcontainers.version>
@@ -94,20 +94,13 @@
 					</java>
 					<pom>
 						<sortPom>
-							<!-- The encoding of the pom files -->
 							<encoding>UTF-8</encoding>
-							<!-- Should empty elements be expanded -->
 							<expandEmptyElements>false</expandEmptyElements>
 							<!-- Indentation with tabs -->
 							<nrOfIndentSpace>-1</nrOfIndentSpace>
-							<!--
-							Sort order of elements: https://github.com/Ekryd/sortpom/wiki/PredefinedSortOrderProfiles
-							recommended_2008_06 - The POM Code Convention that was chosen by Maven developers in 2008 (default for 3.0.0+)
-							-->
+							<!-- Sort order of elements https://github.com/Ekryd/sortpom/wiki/PredefinedSortOrderProfiles : recommended_2008_06.xml default for 3.0.0+ -->
 							<predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
-							<!-- Sort modules -->
 							<sortModules>true</sortModules>
-							<!-- Sort properties -->
 							<sortProperties>true</sortProperties>
 						</sortPom>
 					</pom>

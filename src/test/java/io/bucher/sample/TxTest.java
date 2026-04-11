@@ -7,6 +7,7 @@ import static org.jooq.Records.mapping;
 import io.bucher.sample.domain.Day;
 import io.bucher.sample.tables.records.SomeEntryRecord;
 import java.time.LocalDate;
+import java.util.Objects;
 import org.junit.jupiter.api.Test;
 
 class TxTest extends JooqIntegTest {
@@ -41,8 +42,9 @@ class TxTest extends JooqIntegTest {
 	void other_test() {
 		// var someEntryRecord = new SomeEntryDao(ctx().configuration()).fetchOneById(1L);
 		var someEntryRecord = ctx().selectFrom(SOME_ENTRY)
-				.where(SOME_ENTRY.getIdentity().getField().eq(1000L))
+				.where(SOME_ENTRY.ID.eq(1000L))
 				.fetchOne();
+		Objects.requireNonNull(someEntryRecord, "SomeEntryRecord must not be null");
 		someEntryRecord.setDescription("foo");
 		someEntryRecord.store();
 		assertThat(ctx().fetchCount(SOME_ENTRY)).isEqualTo(12);
