@@ -19,7 +19,7 @@ ij_java_imports_layout = $*,|,*
 ij_java_layout_static_imports_separately = true
 ij_java_preserve_module_imports = false
 
-[*.{json,md,yml,yaml}]
+[*.{json,md,typ,yml,yaml}]
 indent_style = space
 
 [*.{md,xml}]
@@ -28,3 +28,10 @@ max_line_length = 999999
 
 [*.md]
 indent_size = 4
+max_line_length = 999999
+# max_line_length = off doesn't work in Intellij
+trim_trailing_whitespace = false
+
+[*.xml]
+max_line_length = 999999
+# max_line_length = off doesn't work in Intellij
